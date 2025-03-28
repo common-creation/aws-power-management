@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # AWS設定を環境変数として追加
+      # - AWS_ACCOUNT_1_NAME=My AWS Account 1
+      # - AWS_ACCOUNT_1_REGION=ap-northeast-1
+      # - AWS_ACCOUNT_1_ACCESS_KEY_ID=AKIAXXXXXXXXXXXXXXXX
+      # - AWS_ACCOUNT_1_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    volumes:
+      # .env.localファイルをコンテナにマウント
+      - ./.env.local:/app/.env.local:ro
+    restart: unless-stopped 

@@ -1,0 +1,29 @@
+{
+  "name": "ec2-power-management",
+  "version": "1.0.0",
+  "description": "AWS EC2インスタンスの電源管理Webアプリケーション",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-ec2": "^3.777.0",
+    "@aws-sdk/client-ecs": "^3.777.0",
+    "@aws-sdk/client-rds": "^3.777.0",
+    "@aws-sdk/credential-providers": "^3.777.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.0",
+    "@mui/material": "^7.0.0",
+    "aws-sdk": "^2.1692.0",
+    "dotenv": "^16.4.7",
+    "next": "^15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
