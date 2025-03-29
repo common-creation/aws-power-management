@@ -6,10 +6,7 @@ import {
   Box, 
   Button, 
   Alert, 
-  CircularProgress, 
-  AppBar, 
   Toolbar,
-  Stack,
   Drawer,
   List,
   ListItem,
@@ -21,8 +18,6 @@ import {
   useMediaQuery
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import StopIcon from '@mui/icons-material/Stop';
 import ComputerIcon from '@mui/icons-material/Computer';
 import StorageIcon from '@mui/icons-material/Storage';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -638,6 +633,15 @@ export default function Home() {
   // セクション変更ハンドラ
   const handleSectionChange = (section) => {
     setActiveSection(section);
+    
+    // セクション変更時にsessionStorageの検索条件をリセット
+    sessionStorage.removeItem('instanceList.searchFilter');
+    sessionStorage.removeItem('instanceList.selectedAccount');
+    sessionStorage.removeItem('rdsInstanceList.searchFilter');
+    sessionStorage.removeItem('rdsInstanceList.selectedAccount');
+    sessionStorage.removeItem('ecsServiceList.searchFilter');
+    sessionStorage.removeItem('ecsServiceList.selectedAccount');
+    
     // セクション変更時にそのセクションのデータを取得
     if (section === 'ec2') {
       fetchInstances();
