@@ -20,6 +20,29 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: #f5f8fa;
+  height: 100dvh;
+  margin: 0;
+  transition: background-color 0.3s ease;
+}
+
+#__next {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: #121212;
+    color: #fff;
+  }
+}
+
+/* Material UIのダークモード対応 */
+.MuiPaper-root {
+  transition: background-color 0.3s ease;
 }
 
 a {

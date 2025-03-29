@@ -50,6 +50,7 @@ export default function Home() {
   // 次の更新までの秒数をカウントダウンするためのステート
   const [countdown, setCountdown] = useState(0);
   // カウントダウンタイマーのIDをrefで管理（JavaScript環境用）
+  // @ts-ignore - NodeJS.Timeoutをnullに代入するエラーを無視
   const countdownTimerRef = useRef(null);
   // アクティブなセクション
   const [activeSection, setActiveSection] = useState('ec2');
@@ -60,6 +61,9 @@ export default function Home() {
   
   // モバイル用ドロワーの状態
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+
+  // テーマモードの取得（ダークモードかどうか）
+  const isDarkMode = theme.palette.mode === 'dark';
 
   // アカウント情報を取得
   const fetchAccounts = async () => {
@@ -232,6 +236,7 @@ export default function Home() {
     }, 1000);
 
     // refにタイマーIDを保存
+    // @ts-ignore - NodeJS.Timeoutをnullに代入するエラーを無視
     countdownTimerRef.current = timerId;
   };
 
@@ -740,7 +745,11 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ 
+      display: 'flex', 
+      height: '100%',
+      bgcolor: 'background.default' 
+    }}>
       <Head>
         <title>AWS Power Management</title>
         <meta name="description" content="AWS EC2インスタンスとRDSインスタンスの電源管理ツール" />
@@ -788,7 +797,11 @@ export default function Home() {
       <Box
         component="main"
         sx={{ 
-          flexGrow: 1, 
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          bgcolor: 'background.default'
           // p: 3,
           // ml: isMobile ? 0 : `${DRAWER_WIDTH}px`,
           // width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` } 
@@ -796,7 +809,7 @@ export default function Home() {
       >
         <Toolbar /> {/* ヘッダー分の余白 */}
 
-        <Container maxWidth="xl" sx={{ mt: 2 }}>
+        <Container maxWidth="xl" sx={{ mt: 2, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
           {error && (
             <Alert severity="error" sx={{ mb: 3 }}>
               {error}

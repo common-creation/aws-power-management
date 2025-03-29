@@ -19,7 +19,8 @@ import {
   TextField,
   IconButton,
   Stack,
-  InputAdornment
+  InputAdornment,
+  useTheme
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
@@ -34,6 +35,10 @@ const stateColorMap = {
 };
 
 export default function ECSServiceList({ services, onStart, onStop, isLoading, accounts }) {
+  // テーマの取得
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
+  
   const [selectedAccount, setSelectedAccount] = useState(() => {
     const saved = sessionStorage.getItem('ecsServiceList.selectedAccount');
     return saved || 'all';
@@ -103,7 +108,14 @@ export default function ECSServiceList({ services, onStart, onStop, isLoading, a
   // サービスがない場合
   if (!services || services.length === 0) {
     return (
-      <Paper elevation={2} sx={{ p: 3, mb: 4 }}>
+      <Paper 
+        elevation={2} 
+        sx={{ 
+          p: 3, 
+          mb: 4,
+          bgcolor: isDarkMode ? 'background.paper' : undefined 
+        }}
+      >
         <Typography variant="body1">
           表示するECSサービスがありません
         </Typography>
@@ -113,7 +125,14 @@ export default function ECSServiceList({ services, onStart, onStop, isLoading, a
 
   return (
     <Box>
-      <Paper elevation={2} sx={{ p: 2, mb: 4 }}>
+      <Paper 
+        elevation={2} 
+        sx={{ 
+          p: 2, 
+          mb: 4,
+          bgcolor: isDarkMode ? 'background.paper' : undefined 
+        }}
+      >
         <Stack 
           direction={{ xs: 'column', md: 'row' }}
           spacing={2} 
@@ -183,14 +202,14 @@ export default function ECSServiceList({ services, onStart, onStop, isLoading, a
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>クラスター</TableCell>
-                  <TableCell>サービス名</TableCell>
-                  <TableCell>アカウント</TableCell>
-                  <TableCell align="center">ステータス</TableCell>
-                  <TableCell align="center">希望数</TableCell>
-                  <TableCell align="center">実行数</TableCell>
-                  <TableCell align="center">保留数</TableCell>
-                  <TableCell align="right">アクション</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>クラスター</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>サービス名</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>アカウント</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>ステータス</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>希望数</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>実行数</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 'bold' }}>保留数</TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 'bold' }}>アクション</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

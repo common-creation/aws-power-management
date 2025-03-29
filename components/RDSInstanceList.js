@@ -18,7 +18,8 @@ import {
   Box,
   Stack,
   Tooltip,
-  InputAdornment
+  InputAdornment,
+  useTheme
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -29,6 +30,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import InstanceStateBadge from './InstanceStateBadge';
 
 const RDSInstanceList = ({ instances, onStart, onStop, isLoading, accounts }) => {
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
+
   const [selectedAccount, setSelectedAccount] = useState(() => {
     const saved = sessionStorage.getItem('rdsInstanceList.selectedAccount');
     return saved || 'all';
@@ -105,7 +109,14 @@ const RDSInstanceList = ({ instances, onStart, onStop, isLoading, accounts }) =>
   };
 
   return (
-    <Paper elevation={2} sx={{ p: 2, mb: 4 }}>
+    <Paper 
+      elevation={2} 
+      sx={{ 
+        p: 2, 
+        mb: 4,
+        bgcolor: isDarkMode ? 'background.paper' : undefined 
+      }}
+    >
       <Stack 
         direction={{ xs: 'column', md: 'row' }}
         spacing={2} 
@@ -175,15 +186,15 @@ const RDSInstanceList = ({ instances, onStart, onStop, isLoading, accounts }) =>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>名前</TableCell>
-                <TableCell>インスタンスID</TableCell>
-                <TableCell>アカウント</TableCell>
-                <TableCell>エンジン</TableCell>
-                <TableCell>タイプ</TableCell>
-                <TableCell>ステータス</TableCell>
-                <TableCell>エンドポイント</TableCell>
-                <TableCell>ストレージ</TableCell>
-                <TableCell align="center">アクション</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>名前</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>インスタンスID</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>アカウント</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>エンジン</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>タイプ</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>ステータス</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>エンドポイント</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>ストレージ</TableCell>
+                <TableCell align="center" sx={{ fontWeight: 'bold' }}>アクション</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
