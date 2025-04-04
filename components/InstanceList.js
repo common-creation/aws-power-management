@@ -97,10 +97,51 @@ const InstanceList = ({ instances, onStart, onStop, isLoading, accounts }) => {
 
   // テキストをクリップボードにコピーする関数
   const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedText(text);
-      setTimeout(() => setCopiedText(''), 2000);
-    });
+    const fallbackCopyTextToClipboard = (text) => {
+      try {
+        // フォールバック方法1: document.execCommand
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        
+        // オフスクリーンに配置
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        const success = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        if (success) {
+          setCopiedText(text);
+          setTimeout(() => setCopiedText(''), 2000);
+          return true;
+        }
+        return false;
+      } catch (err) {
+        console.error('クリップボードへのコピーに失敗しました:', err);
+        return false;
+      }
+    };
+
+    // Modern API (navigator.clipboard)がサポートされているか確認
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          setCopiedText(text);
+          setTimeout(() => setCopiedText(''), 2000);
+        })
+        .catch(err => {
+          console.warn('Clipboard API failed:', err);
+          // APIが失敗した場合はフォールバックメソッドを試す
+          fallbackCopyTextToClipboard(text);
+        });
+    } else {
+      // Clipboard APIがサポートされていない場合はフォールバックメソッドを使用
+      fallbackCopyTextToClipboard(text);
+    }
   };
 
   // 検索フィルターのクリア
